@@ -6,30 +6,45 @@ Link prediction on the Cora citation network using Node2Vec embeddings and logis
 networkx – for graph representation and manipulation
 
 node2vec – for learning embeddings of nodes
+
 scikit-learn – for classification and evaluation
+
 torch & torch-geometric – to load graph datasets
+
 matplotlib – for visualization
+
 tqdm – for progress bars
 
+
 These imports bring in all necessary functions for:
+
 •	Graph manipulation
+
 •	Model training (Node2Vec + Logistic Regression)
+
 •	Evaluation (AUC, precision-recall)
+
 •	Dataset handling (Cora via PyTorch Geometric)
 
 ##	Loading Cora Dataset : 
 
 Loads the Cora citation network, a classic graph dataset where:
+
 Nodes = research papers
+
 Edges = citations between papers
+
 Converts PyTorch Geometric format to a NetworkX graph.
+
 Makes it undirected to simplify link prediction.
 
 RESULT : 
+
 Nodes: 2708, Edges: 5278
 
 ##	Splitting Edges into Train and Test : 
 Randomly shuffles all edges.
+
 Splits them into 80% training and 20% testing edges (positive examples).
              Next, builds a train graph with only training edges
 Then defines a function to create negative samples (non-existent            edges)
