@@ -4,11 +4,12 @@ Link prediction on the Cora citation network using Node2Vec embeddings and logis
 
 ##	Libraries Used : 
 networkx – for graph representation and manipulation
+
 node2vec – for learning embeddings of nodes
 scikit-learn – for classification and evaluation
 torch & torch-geometric – to load graph datasets
 matplotlib – for visualization
- tqdm – for progress bars
+tqdm – for progress bars
 
 These imports bring in all necessary functions for:
 •	Graph manipulation
