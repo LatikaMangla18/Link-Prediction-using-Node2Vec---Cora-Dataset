@@ -62,8 +62,8 @@ The dataset is loaded using PyTorch Geometric and converted into a NetworkX grap
 The graph is made **undirected** for simplified link prediction.
 
 **Dataset Summary:**  
--Nodes: 2708
--Edges: 5278
+- **Nodes:** 2708
+- **Edges:** 5278
 
 ---
 
