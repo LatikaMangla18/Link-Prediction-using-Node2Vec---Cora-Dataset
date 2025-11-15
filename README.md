@@ -1,112 +1,155 @@
-# Link-Prediction-using-Node2Vec---Cora-Dataset
-Link prediction on the Cora citation network using Node2Vec embeddings and logistic regression. Includes data preprocessing, negative sampling, edge feature construction, model training, and evaluation with AUC, AP, ROC/PR curves, and predicted link visualization.
+# Link Prediction using Node2Vec — Cora Dataset
 
+Link prediction on the **Cora citation network** using **Node2Vec embeddings** and **Logistic Regression**.  
+Includes data preprocessing, negative sampling, edge feature construction, model training, and evaluation with **AUC**, **AP**, **ROC/PR curves**, and **predicted link visualization**.
 
-##	Libraries Used : 
-networkx – for graph representation and manipulation
+---
 
-node2vec – for learning embeddings of nodes
+## 🚀 Libraries Used
+- **networkx** – graph representation & manipulation  
+- **node2vec** – node embedding generation  
+- **scikit-learn** – classification & evaluation  
+- **torch & torch-geometric** – dataset loading  
+- **matplotlib** – visualizations  
+- **tqdm** – progress bars  
 
-scikit-learn – for classification and evaluation
+These libraries support:
+- Graph manipulation  
+- Node2Vec + Logistic Regression model training  
+- Evaluation (AUC, Precision-Recall)  
+- Loading the Cora dataset via PyTorch Geometric  
 
-torch & torch-geometric – to load graph datasets
+---
 
-matplotlib – for visualization
+## 📥 Loading the Cora Dataset
+The Cora citation network contains:
+- **Nodes:** research papers  
+- **Edges:** citations  
 
-tqdm – for progress bars
+The dataset is loaded using PyTorch Geometric and converted into a NetworkX graph.  
+The graph is made **undirected** for simplified link prediction.
 
+**Dataset Summary:**  
+# Link Prediction using Node2Vec — Cora Dataset
 
-These imports bring in all necessary functions for:
+Link prediction on the **Cora citation network** using **Node2Vec embeddings** and **Logistic Regression**.  
+Includes data preprocessing, negative sampling, edge feature construction, model training, and evaluation with **AUC**, **AP**, **ROC/PR curves**, and **predicted link visualization**.
 
-•	Graph manipulation
+---
 
-•	Model training (Node2Vec + Logistic Regression)
+## 🚀 Libraries Used
+- **networkx** – graph representation & manipulation  
+- **node2vec** – node embedding generation  
+- **scikit-learn** – classification & evaluation  
+- **torch & torch-geometric** – dataset loading  
+- **matplotlib** – visualizations  
+- **tqdm** – progress bars  
 
-•	Evaluation (AUC, precision-recall)
+These libraries support:
+- Graph manipulation  
+- Node2Vec + Logistic Regression model training  
+- Evaluation (AUC, Precision-Recall)  
+- Loading the Cora dataset via PyTorch Geometric  
 
-•	Dataset handling (Cora via PyTorch Geometric)
+---
 
-##	Loading Cora Dataset : 
+## 📥 Loading the Cora Dataset
+The Cora citation network contains:
+- **Nodes:** research papers  
+- **Edges:** citations  
 
-Loads the Cora citation network, a classic graph dataset where:
+The dataset is loaded using PyTorch Geometric and converted into a NetworkX graph.  
+The graph is made **undirected** for simplified link prediction.
 
-Nodes = research papers
+**Dataset Summary:**  
+Nodes: 2708
 
-Edges = citations between papers
+Edges: 5278
 
-Converts PyTorch Geometric format to a NetworkX graph.
+---
 
-Makes it undirected to simplify link prediction.
+## ✂️ Splitting Edges into Train & Test
+- Randomly shuffled all edges  
+- Split into **80% training** and **20% testing** (positive edges)  
+- Constructed a **training graph** using only training edges  
 
-RESULT : 
+Generated **negative samples** (non-existent edges) for balanced binary classification.
 
-Nodes: 2708, Edges: 5278
+---
 
-##	Splitting Edges into Train and Test : 
-Randomly shuffles all edges.
+## 🔍 Node2Vec Embedding Generation
+Trained Node2Vec on the training graph using:
 
-Splits them into 80% training and 20% testing edges (positive examples).
-             Next, builds a train graph with only training edges
-Then defines a function to create negative samples (non-existent            edges)
-randomly samples pairs of nodes that don’t have edges — these act as negative edges for binary classification.
+- `dimensions = 128`  
+- `walk_length = 20`  
+- `num_walks = 100`  
 
-##	Node2Vec Embedding Generation
-Trains a Node2Vec model on the training graph:
-dimensions=128: embedding vector size
-walk_length=20, num_walks=100: control random walks per node
-This produces a 128-dimensional embedding vector for each node.
+This produced a **128-dimensional embedding** for each node.
 
-Used a helper function to get edge-level features (Hadamard product).
-Then prepared the Train Test Data by : 
-•	Positive and negative edge pairs are converted into features +labels.
+Edge-level features were created using the **Hadamard product** of node embeddings.
 
-##	Training logistic Regression model and evaluation: 
-A simple binary classifier is trained:
-•	Input: edge embeddings
-•	Output: whether an edge exists (1) or not (0)
+---
 
-Evaluation: AUC (Area Under ROC Curve) and Average Precision are calculated to measure link prediction quality.
-AUC: 0.8442
-Average Precision: 0.8783
+## 🧠 Training Logistic Regression & Evaluation
+Trained a binary classifier to predict whether an edge exists.
 
-##	Visualizing the Training graphs: 
+- **Input:** edge embedding vector  
+- **Output:** 1 = link exists, 0 = link does not exist  
 
-1)	Graph structure without predicted Links : 
- 
-2)	Visualizing Predicted Links: 
- 
-Shows top 20 new links (red) predicted by the model — likely new potential connections.
+**Performance Results:**
+- **AUC:** 0.8442  
+- **Average Precision:** 0.8783  
 
-##	ROC , Precision-Recall and Confusion Matrix: 
-(a) ROC Curve
-(b) Precision–Recall Curve
-(c) Confusion Matrix (based on threshold 0.5)
+These metrics confirm strong predictive performance.
 
-a)	 
-b)	 
-c)	 
+---
 
-##	Graph Metrices (Interpretation of Graph Structure)
-Extracts the largest connected component (since small ones may be isolated).
-Calculates:
-•	Average Path Length → average “distance” between nodes (collaboration time)
-•	Average Clustering Coefficient → how interconnected nodes are (collaboration intensity)
-Result: 
-	Average Collaboration Time (path length): 6.9600
-Average Collaboration Intensity (clustering): 0.1823
+## 📊 Graph Visualizations
 
+### 1️⃣ Training Graph (Without Predicted Links)
+Shows the structure of the Cora network using a spring layout.
 
-Step	Purpose
-1	Install & import dependencies
-2	Load Cora dataset
-3	Convert to NetworkX graph
-4	Split edges into train/test
-5	Generate negative samples
-6	Learn Node2Vec embeddings
-7	Build edge feature vectors
-8	Train Logistic Regression model
-9	Evaluate with AUC & AP
-10	Visualize training graph & predicted links
-11	Plot ROC, PR, and Confusion Matrix
-12	Analyze structural graph metrics
+### 2️⃣ Predicted Links Visualization
+Top 20 predicted links (highlighted in **red**) showing likely future or missing citations.
+
+---
+
+## 📈 ROC, Precision–Recall, and Confusion Matrix
+Includes:
+- **ROC Curve**  
+- **Precision–Recall Curve**  
+- **Confusion Matrix** (threshold: 0.5)
+
+These visualizations help assess classification performance.
+
+---
+
+## 🧮 Graph Metrics (Structural Insights)
+Computed from the **largest connected component**:
+
+| Metric | Meaning | Result |
+|--------|---------|--------|
+| **Average Path Length** | Avg. distance between nodes (*collaboration time*) | **6.9600** |
+| **Clustering Coefficient** | Local interconnectedness (*collaboration intensity*) | **0.1823** |
+
+These metrics describe structural patterns in the citation graph.
+
+---
+
+## 🧩 Project Pipeline
+
+| Step | Purpose |
+|------|---------|
+| 1 | Install & import dependencies |
+| 2 | Load Cora dataset |
+| 3 | Convert to NetworkX graph |
+| 4 | Split edges into train/test |
+| 5 | Generate negative samples |
+| 6 | Train Node2Vec embeddings |
+| 7 | Construct edge feature vectors |
+| 8 | Train Logistic Regression model |
+| 9 | Evaluate using AUC & AP |
+| 10 | Visualize training graph & predicted links |
+| 11 | Plot ROC, PR, and confusion matrix |
+| 12 | Analyze graph structural metrics |
 
